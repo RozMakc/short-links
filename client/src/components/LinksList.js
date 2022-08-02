@@ -13,6 +13,7 @@ export const LinksList = ({ links }) => {
         <th>№</th>
         <th>Оригинальная</th>
         <th>Сокращенная</th>
+          <th>Переходов</th>
         <th>Открыть</th>
       </tr>
       </thead>
@@ -24,6 +25,7 @@ export const LinksList = ({ links }) => {
             <td>{index + 1}</td>
             <td>{link.from}</td>
             <td>{link.to}</td>
+            <td>{link.clicks}</td>
             <td>
               <Link to={`/detail/${link._id}`}>Открыть</Link>
             </td>

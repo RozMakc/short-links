@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom'
 export const CreatePage = () => {
   const history = useHistory()
   const auth = useContext(AuthContext)
-  const {request} = useHttp()
+  const {loading, request} = useHttp()
   const [link, setLink] = useState('')
 
   useEffect(() => {
@@ -24,6 +24,15 @@ export const CreatePage = () => {
     }
   }
 
+  const getLink = async event => {
+    try {
+      const data = await request('/api/link/generate', 'POST', {from: link}, {
+        Authorization: `Bearer ${auth.token}`
+      })
+      history.push(`/detail/${data.link._id}`)
+    } catch (e) {}
+  }
+
   return (
     <div className="row">
       <div className="col s8 offset-s2" style={{paddingTop: '2rem'}}>
@@ -37,6 +46,14 @@ export const CreatePage = () => {
             onKeyPress={pressHandler}
           />
           <label htmlFor="link">Введите ссылку</label>
+          <button
+              className="btn yellow darken-4"
+              style={{marginRight: 10}}
+              disabled={loading}
+              onClick={getLink}
+          >
+            Сократить
+          </button>
         </div>
       </div>
     </div>
